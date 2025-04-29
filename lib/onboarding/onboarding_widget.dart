@@ -81,12 +81,25 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                             children: [
                               Align(
                                 alignment: AlignmentDirectional(0.0, 0.0),
-                                child: Text(
-                                  'Profile',
-                                  style: FlutterFlowTheme.of(context)
-                                      .headlineLarge
-                                      .override(
-                                        font: GoogleFonts.inter(
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 35.0),
+                                  child: Text(
+                                    'Profile',
+                                    style: FlutterFlowTheme.of(context)
+                                        .headlineLarge
+                                        .override(
+                                          font: GoogleFonts.inter(
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .headlineLarge
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .headlineLarge
+                                                    .fontStyle,
+                                          ),
+                                          letterSpacing: 0.0,
                                           fontWeight:
                                               FlutterFlowTheme.of(context)
                                                   .headlineLarge
@@ -96,14 +109,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                                   .headlineLarge
                                                   .fontStyle,
                                         ),
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .headlineLarge
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .headlineLarge
-                                            .fontStyle,
-                                      ),
+                                  ),
                                 ),
                               ),
                             ],
@@ -497,7 +503,52 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                         borderRadius: BorderRadius.circular(24.0),
                       ),
                     ),
-                  ],
+                    FFButtonWidget(
+                      onPressed: () async {
+                        GoRouter.of(context).prepareAuthEvent();
+                        await authManager.signOut();
+                        GoRouter.of(context).clearRedirectLocation();
+
+                        context.goNamedAuth(
+                            LoginWidget.routeName, context.mounted);
+                      },
+                      text: 'Logout',
+                      options: FFButtonOptions(
+                        width: double.infinity,
+                        height: 70.0,
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            16.0, 0.0, 16.0, 0.0),
+                        iconPadding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        color: FlutterFlowTheme.of(context).primary,
+                        textStyle: FlutterFlowTheme.of(context)
+                            .labelMedium
+                            .override(
+                              font: GoogleFonts.inter(
+                                fontWeight: FlutterFlowTheme.of(context)
+                                    .labelMedium
+                                    .fontWeight,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .labelMedium
+                                    .fontStyle,
+                              ),
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              letterSpacing: 0.0,
+                              fontWeight: FlutterFlowTheme.of(context)
+                                  .labelMedium
+                                  .fontWeight,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .labelMedium
+                                  .fontStyle,
+                            ),
+                        elevation: 0.0,
+                        borderSide: BorderSide(
+                          color: FlutterFlowTheme.of(context).primaryText,
+                        ),
+                        borderRadius: BorderRadius.circular(24.0),
+                      ),
+                    ),
+                  ].divide(SizedBox(height: 12.0)),
                 ),
               ),
             ),

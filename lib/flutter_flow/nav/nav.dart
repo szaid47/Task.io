@@ -121,6 +121,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'completed')
               : CompletedWidget(),
+        ),
+        FFRoute(
+          name: OnboardingCopyWidget.routeName,
+          path: OnboardingCopyWidget.routePath,
+          builder: (context, params) => params.isEmpty
+              ? NavBarPage(initialPage: 'onboardingCopy')
+              : OnboardingCopyWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

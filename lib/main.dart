@@ -18,8 +18,6 @@ void main() async {
 
   await initFirebase();
 
-  await FlutterFlowTheme.initialize();
-
   runApp(MyApp());
 }
 
@@ -41,7 +39,7 @@ class MyAppScrollBehavior extends MaterialScrollBehavior {
 }
 
 class _MyAppState extends State<MyApp> {
-  ThemeMode _themeMode = FlutterFlowTheme.themeMode;
+  ThemeMode _themeMode = ThemeMode.system;
 
   late AppStateNotifier _appStateNotifier;
   late GoRouter _router;
@@ -89,7 +87,6 @@ class _MyAppState extends State<MyApp> {
 
   void setThemeMode(ThemeMode mode) => safeSetState(() {
         _themeMode = mode;
-        FlutterFlowTheme.saveThemeMode(mode);
       });
 
   @override
@@ -106,10 +103,6 @@ class _MyAppState extends State<MyApp> {
       supportedLocales: const [Locale('en', '')],
       theme: ThemeData(
         brightness: Brightness.light,
-        useMaterial3: false,
-      ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
         useMaterial3: false,
       ),
       themeMode: _themeMode,
@@ -130,7 +123,7 @@ class NavBarPage extends StatefulWidget {
 
 /// This is the private State class that goes with NavBarPage.
 class _NavBarPageState extends State<NavBarPage> {
-  String _currentPageName = 'completed';
+  String _currentPageName = 'tasks';
   late Widget? _currentPage;
 
   @override
@@ -143,6 +136,7 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
+      'onboardingCopy': OnboardingCopyWidget(),
       'tasks': TasksWidget(),
       'completed': CompletedWidget(),
     };
@@ -163,6 +157,14 @@ class _NavBarPageState extends State<NavBarPage> {
         showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,
         items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person,
+              size: 30.0,
+            ),
+            label: 'Home',
+            tooltip: '',
+          ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.list,

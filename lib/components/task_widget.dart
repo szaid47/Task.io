@@ -65,48 +65,65 @@ class _TaskWidgetState extends State<TaskWidget> {
           ),
           child: Padding(
             padding: EdgeInsets.all(12.0),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Theme(
-                  data: ThemeData(
-                    checkboxTheme: CheckboxThemeData(
-                      visualDensity: VisualDensity.compact,
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4.0),
+            child: InkWell(
+              splashColor: Colors.transparent,
+              focusColor: Colors.transparent,
+              hoverColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onLongPress: () async {
+                await widget.tasksDocument!.reference.delete();
+              },
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Theme(
+                    data: ThemeData(
+                      checkboxTheme: CheckboxThemeData(
+                        visualDensity: VisualDensity.compact,
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                        ),
                       ),
+                      unselectedWidgetColor:
+                          FlutterFlowTheme.of(context).alternate,
                     ),
-                    unselectedWidgetColor:
-                        FlutterFlowTheme.of(context).alternate,
+                    child: Checkbox(
+                      value: _model.checkboxValue ??=
+                          widget.tasksDocument!.completed,
+                      onChanged: (newValue) async {
+                        safeSetState(() => _model.checkboxValue = newValue!);
+                        if (newValue!) {
+                          await widget.checkAction?.call();
+                        } else {
+                          await widget.checkAction?.call();
+                        }
+                      },
+                      side: BorderSide(
+                        width: 2,
+                        color: FlutterFlowTheme.of(context).alternate,
+                      ),
+                      activeColor: FlutterFlowTheme.of(context).primary,
+                      checkColor: FlutterFlowTheme.of(context).info,
+                    ),
                   ),
-                  child: Checkbox(
-                    value: _model.checkboxValue ??=
-                        widget.tasksDocument!.completed,
-                    onChanged: (newValue) async {
-                      safeSetState(() => _model.checkboxValue = newValue!);
-                      if (newValue!) {
-                        await widget.checkAction?.call();
-                      } else {
-                        await widget.checkAction?.call();
-                      }
-                    },
-                    side: BorderSide(
-                      width: 2,
-                      color: FlutterFlowTheme.of(context).alternate,
-                    ),
-                    activeColor: FlutterFlowTheme.of(context).primary,
-                    checkColor: FlutterFlowTheme.of(context).info,
-                  ),
-                ),
-                Flexible(
-                  child: Text(
-                    valueOrDefault<String>(
-                      widget.tasksDocument?.title,
-                      'title',
-                    ),
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          font: GoogleFonts.inter(
+                  Flexible(
+                    child: Text(
+                      valueOrDefault<String>(
+                        widget.tasksDocument?.title,
+                        'title',
+                      ),
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            font: GoogleFonts.inter(
+                              fontWeight: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .fontWeight,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .fontStyle,
+                            ),
+                            fontSize: 18.0,
+                            letterSpacing: 0.0,
                             fontWeight: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .fontWeight,
@@ -114,17 +131,10 @@ class _TaskWidgetState extends State<TaskWidget> {
                                 .bodyMedium
                                 .fontStyle,
                           ),
-                          fontSize: 18.0,
-                          letterSpacing: 0.0,
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                        ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

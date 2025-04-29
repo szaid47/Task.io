@@ -1004,7 +1004,7 @@ class _LoginWidgetState extends State<LoginWidget>
                               }
 
                               context.goNamedAuth(
-                                  CompletedWidget.routeName, context.mounted);
+                                  TasksWidget.routeName, context.mounted);
                             },
                             text: 'Login',
                             options: FFButtonOptions(
@@ -1125,6 +1125,29 @@ class _LoginWidgetState extends State<LoginWidget>
                             ),
                           ),
                       ],
+                    ),
+                    Align(
+                      alignment: AlignmentDirectional(0.0, 0.0),
+                      child: Text(
+                        '@2025 SyedZaheed',
+                        style: FlutterFlowTheme.of(context).labelSmall.override(
+                              font: GoogleFonts.inter(
+                                fontWeight: FlutterFlowTheme.of(context)
+                                    .labelSmall
+                                    .fontWeight,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .labelSmall
+                                    .fontStyle,
+                              ),
+                              letterSpacing: 0.0,
+                              fontWeight: FlutterFlowTheme.of(context)
+                                  .labelSmall
+                                  .fontWeight,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .labelSmall
+                                  .fontStyle,
+                            ),
+                      ),
                     ),
                   ],
                 ),
